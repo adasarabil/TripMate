@@ -41,29 +41,32 @@ TripMate is a smart travel planner built with Flutter and Firebase for **CS310 M
 
 ## Getting Started
 
-### Prerequisites
+### Step 2.2 Flutter UI demo
 
-- [Flutter SDK](https://docs.flutter.dev/get-started/install) (stable channel)
-- Android Studio or Xcode with an emulator / simulator
-- A Firebase project (config files are not committed to this repository)
-
-### Setup
+The mobile UI was developed with **Flutter 3.50.0 stable** and **Dart 3.14.0**. Install the [Flutter SDK](https://docs.flutter.dev/install), then start an Android emulator or iOS simulator.
 
 ```bash
 git clone https://github.com/adasarabil/TripMate.git
 cd TripMate
 flutter pub get
-flutter run
+flutter devices
+flutter run -d <device-id>
 ```
 
-Firebase configuration files (`google-services.json`, `GoogleService-Info.plist` and `lib/firebase_options.dart`) are listed in `.gitignore` and are not committed. Each member generates them locally once the Firebase project is set up:
+On Welcome, select **Log In**. Use `ada@example.com` and `tripmate123` to open My Trips as Ada. Both auth screens validate locally and start the same demo session. Trips and settings use in-memory demo data that resets when the app restarts. The Flutter UI demo runs offline once built.
+
+Run `flutter analyze` and `flutter test` from the repo root to verify the app.
+
+### Step 3 Firebase and Google Places
+
+Firebase and Google Places setup applies to Step 3. Local configuration files (`google-services.json`, `GoogleService-Info.plist` and `lib/firebase_options.dart`) are listed in `.gitignore`. Each member generates them locally once the Firebase project is set up.
 
 ```bash
 dart pub global activate flutterfire_cli
 flutterfire configure
 ```
 
-The Google Places API key goes in a local `.env` file, which is also ignored.
+The Google Places API key goes in an ignored local `.env` file.
 
 ## Team Workflow
 
