@@ -2,9 +2,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../app/step22_routes.dart';
 import '../../ui/app_widgets.dart';
+import 'itinerary_screen.dart';
 
-Widget itineraryScreen(CityStopArgs args) =>
-    const PendingStep22Screen('Daily Itinerary');
+Widget itineraryScreen(CityStopArgs args) => ItineraryScreen(args: args);
 
 Widget addActivityScreen(ActivityArgs args) =>
     const PendingStep22Screen('Add Activity');
