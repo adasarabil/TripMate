@@ -182,10 +182,17 @@ class _TripDateFieldState extends State<TripDateField> {
       readOnly: true,
       onTap: _pick,
       validator: (_) => widget.validator(widget.value),
+      // Slightly smaller text and a compact icon keep the full dd/mm/yyyy
+      // visible when two date fields share a 320 px wide row.
+      style: Theme.of(context).textTheme.bodyMedium,
       decoration: InputDecoration(
         labelText: widget.label,
         hintText: 'dd/mm/yyyy',
         suffixIcon: const Icon(Icons.calendar_today_outlined, size: 18),
+        suffixIconConstraints: const BoxConstraints(
+          minWidth: 34,
+          minHeight: 34,
+        ),
       ),
     );
   }

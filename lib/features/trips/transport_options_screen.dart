@@ -157,19 +157,17 @@ class _TransportOptionsScreenState extends State<TransportOptionsScreen> {
                   children: [
                     const Expanded(child: Text('Cheapest route total')),
                     const SizedBox(width: AppSpacing.sm),
-                    Flexible(
-                      child: Text(
-                        summary.isComplete
-                            ? TripFormat.money(
-                                summary.totalMinor,
-                                trip.currencyCode,
-                              )
-                            : '${TripFormat.money(summary.totalMinor, trip.currencyCode)}'
-                                  ' · incomplete',
-                        key: const Key('transport-route-total'),
-                        textAlign: TextAlign.end,
-                        style: theme.textTheme.titleSmall,
-                      ),
+                    Text(
+                      summary.isComplete
+                          ? TripFormat.money(
+                              summary.totalMinor,
+                              trip.currencyCode,
+                            )
+                          : '${TripFormat.money(summary.totalMinor, trip.currencyCode)}'
+                                ' · incomplete',
+                      key: const Key('transport-route-total'),
+                      textAlign: TextAlign.end,
+                      style: theme.textTheme.titleSmall,
                     ),
                   ],
                 ),
