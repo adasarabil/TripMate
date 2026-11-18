@@ -178,7 +178,7 @@ void main() {
     (tester) async {
       await _openTrips(tester);
       await _tap(tester, find.text('Interrail Summer'));
-      expect(find.text('Route is in development.'), findsOneWidget);
+      expect(find.text('Florence'), findsOneWidget);
       expect(find.byType(BottomNavigationBar), findsNothing);
 
       await _tap(tester, find.text('Expenses'));
@@ -197,7 +197,7 @@ void main() {
       expect(_navigator(tester).canPop(), isFalse);
 
       await _tap(tester, find.text('Weekend in Izmir'));
-      expect(find.text('Route is in development.'), findsOneWidget);
+      expect(find.text('Çeşme'), findsOneWidget);
     },
   );
 
@@ -206,7 +206,7 @@ void main() {
     (tester) async {
       await _openTrips(tester);
       await _tap(tester, find.byTooltip('Create trip'));
-      expect(find.text('New Trip is in development.'), findsOneWidget);
+      expect(find.text('New Trip'), findsOneWidget);
       await _tap(tester, find.byType(BackButton));
       expect(find.byType(Card), findsNWidgets(3));
 
@@ -214,7 +214,7 @@ void main() {
       _navigator(tester).pop<String>('weekend-in-izmir');
       await tester.pumpAndSettle();
       expect(find.text('Weekend in Izmir'), findsOneWidget);
-      expect(find.text('Route is in development.'), findsOneWidget);
+      expect(find.text('Çeşme'), findsOneWidget);
       await _tap(tester, find.byType(BackButton));
       expect(find.byType(Card), findsNWidgets(3));
     },
