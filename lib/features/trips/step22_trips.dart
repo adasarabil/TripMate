@@ -1,19 +1,20 @@
 import 'package:flutter/widgets.dart';
 
 import '../../app/step22_routes.dart';
-import '../../ui/app_widgets.dart';
+import 'add_transport_option_screen.dart';
+import 'city_stop_form_screen.dart';
+import 'create_trip_screen.dart';
+import 'route_tab.dart';
+import 'transport_options_screen.dart';
 
-Widget createTripScreen() => const PendingStep22Screen('New Trip');
+Widget createTripScreen() => const CreateTripScreen();
 
-Widget tripRouteTab(String tripId) =>
-    const PendingStep22Screen('Route', embedded: true);
+Widget tripRouteTab(String tripId) => RouteTab(tripId: tripId);
 
-Widget editCityStopScreen(CityEditArgs args) => PendingStep22Screen(
-  args.stopId == null ? 'Add City Stop' : 'Edit City Stop',
-);
+Widget editCityStopScreen(CityEditArgs args) => CityStopFormScreen(args: args);
 
 Widget transportOptionsScreen(LegArgs args) =>
-    const PendingStep22Screen('Transport Options');
+    TransportOptionsScreen(args: args);
 
 Widget addTransportOptionScreen(LegArgs args) =>
-    const PendingStep22Screen('Add Transport Option');
+    AddTransportOptionScreen(args: args);
