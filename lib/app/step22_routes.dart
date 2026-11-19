@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 
 import '../data/group_store.dart';
+import '../data/places_store.dart';
 import '../data/trip_store.dart';
 import '../features/discover/step22_discover.dart' as discover;
 import '../features/expenses/step22_expenses.dart' as expenses;
@@ -123,10 +124,11 @@ class LegArgs {
 }
 
 class PlaceFormArgs {
-  const PlaceFormArgs(this.tripId, [this.stopId]);
+  const PlaceFormArgs(this.tripId, [this.stopId, this.place]);
 
   final String tripId;
   final String? stopId;
+  final NearbyPlace? place;
 }
 
 class UnavailableScreen extends StatelessWidget {
