@@ -97,6 +97,11 @@ class _NearbyScreenState extends State<NearbyScreen> {
                     key: ValueKey(place.id),
                     place: place,
                     log: store.logForPlace(args.tripId, place.id),
+                    onLog: () => Navigator.pushNamed<Object?>(
+                      context,
+                      AppRoute.addPlaceLog,
+                      arguments: PlaceFormArgs(args.tripId, stop.id, place),
+                    ),
                   ),
             ],
           ],
@@ -107,10 +112,16 @@ class _NearbyScreenState extends State<NearbyScreen> {
 }
 
 class _NearbyCard extends StatelessWidget {
-  const _NearbyCard({super.key, required this.place, required this.log});
+  const _NearbyCard({
+    super.key,
+    required this.place,
+    required this.log,
+    required this.onLog,
+  });
 
   final NearbyPlace place;
   final PlaceLog? log;
+  final VoidCallback onLog;
 
   @override
   Widget build(BuildContext context) {
@@ -156,9 +167,20 @@ class _NearbyCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.sm),
-              Text(
-                DiscoverFormat.distance(place.distanceMeters),
-                style: theme.textTheme.labelLarge,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    DiscoverFormat.distance(place.distanceMeters),
+                    style: theme.textTheme.labelLarge,
+                  ),
+                  if (logged == null)
+                    IconButton(
+                      tooltip: 'Log ${place.name}',
+                      icon: const Icon(Icons.add_comment_outlined, size: 20),
+                      onPressed: onLog,
+                    ),
+                ],
               ),
             ],
           ),

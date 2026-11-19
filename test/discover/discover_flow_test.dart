@@ -155,6 +155,34 @@ void main() {
     expect(find.text('Da Enzo al 29'), findsOneWidget);
   });
 
+  testWidgets('Logging a nearby place prefills the form and marks it', (
+    tester,
+  ) async {
+    final places = await _open(
+      tester,
+      AppRoute.nearby,
+      const CityStopArgs(_trip, 'rome'),
+    );
+
+    expect(find.byTooltip('Log Da Enzo al 29'), findsNothing);
+    await _tap(tester, find.byTooltip('Log Trevi Fountain'));
+
+    expect(find.text('Add Place Log'), findsOneWidget);
+    final name = tester.widget<TextFormField>(
+      find.byKey(const Key('log-name')),
+    );
+    expect(name.controller!.text, 'Trevi Fountain');
+
+    await _tap(tester, find.byTooltip('5 stars'));
+    await _tap(tester, _filled('Save Log'));
+
+    expect(find.text('Add Place Log'), findsNothing);
+    expect(find.byTooltip('Log Trevi Fountain'), findsNothing);
+    final log = places.logForPlace(_trip, 'rome-trevi');
+    expect(log?.type, PlaceType.activity);
+    expect(log?.stopId, 'rome');
+  });
+
   testWidgets('A missing stop shows a safe fallback', (tester) async {
     await _open(
       tester,
