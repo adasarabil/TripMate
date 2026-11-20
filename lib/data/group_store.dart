@@ -21,7 +21,7 @@ class GroupStore extends ChangeNotifier {
   final String currentUserId;
 
   /// Demo group that is not in My Groups yet, reserved for the Join Group
-  /// success path. Its code is documented in the README.
+  /// success path. Its code TRP-7M2Q is listed in the Step 2.2 PR notes.
   static const joinableDemoGroup = Group(
     id: 'cappadocia-crew',
     name: 'Cappadocia Crew',
