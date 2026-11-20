@@ -160,6 +160,7 @@ class PlacesStore extends ChangeNotifier {
     required PlaceType type,
     required int rating,
     required String authorId,
+    String? placeId,
     String? note,
     String? location,
   }) {
@@ -174,6 +175,7 @@ class PlacesStore extends ChangeNotifier {
         type: type,
         rating: rating,
         authorId: authorId,
+        placeId: placeId,
         note: _optional(note),
         location: _optional(location),
       ),

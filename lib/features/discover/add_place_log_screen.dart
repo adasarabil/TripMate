@@ -19,11 +19,11 @@ class AddPlaceLogScreen extends StatefulWidget {
 
 class _AddPlaceLogScreenState extends State<AddPlaceLogScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _name = TextEditingController();
+  late final _name = TextEditingController(text: widget.args.place?.name);
   final _note = TextEditingController();
   final _location = TextEditingController();
   late String? _stopId = widget.args.stopId;
-  var _type = PlaceType.food;
+  late var _type = widget.args.place?.type ?? PlaceType.food;
   int? _rating;
   var _submitted = false;
   var _saved = false;
@@ -56,6 +56,7 @@ class _AddPlaceLogScreenState extends State<AddPlaceLogScreen> {
       type: _type,
       rating: _rating!,
       authorId: context.read<DemoSession>().currentUserId,
+      placeId: widget.args.place?.id,
       note: _note.text,
       location: _location.text,
     );

@@ -96,4 +96,20 @@ void main() {
     store.removeLog(log!.id);
     expect(store.logForPlace(_trip, 'rome-da-enzo'), isNull);
   });
+
+  test('a log added for a nearby place marks that place', () {
+    final store = PlacesStore();
+    expect(store.logForPlace(_trip, 'rome-trevi'), isNull);
+    final id = store.addLog(
+      tripId: _trip,
+      stopId: 'rome',
+      name: 'Trevi Fountain',
+      type: PlaceType.activity,
+      rating: 4,
+      authorId: 'naz',
+      placeId: 'rome-trevi',
+    );
+    expect(store.logForPlace(_trip, 'rome-trevi')?.id, id);
+    expect(store.logForPlace('balkan-tour', 'rome-trevi'), isNull);
+  });
 }
