@@ -59,8 +59,9 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
 
   Future<void> _share(Group group) => _guard(() async {
     final box = context.findRenderObject() as RenderBox?;
+    var nativeShared = false;
     try {
-      await SharePlus.instance.share(
+      final result = await SharePlus.instance.share(
         ShareParams(
           text: _shareText(group),
           subject: 'TripMate invite',
@@ -69,9 +70,12 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
               : box.localToGlobal(Offset.zero) & box.size,
         ),
       );
+      nativeShared = result.status != ShareResultStatus.unavailable;
     } catch (_) {
-      // No native share sheet (e.g. tests or an unsupported platform).
-      if (!mounted) return;
+      nativeShared = false;
+    }
+    // No native share sheet (e.g. tests or an unsupported platform).
+    if (!nativeShared && mounted) {
       await showModalBottomSheet<void>(
         context: context,
         showDragHandle: true,
@@ -187,32 +191,34 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(AppSpacing.md),
-                child: Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: AppSpacing.sm,
-                  runSpacing: AppSpacing.sm,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     SelectableText(
                       group.inviteCode,
+                      textAlign: TextAlign.center,
                       style: theme.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1.5,
                       ),
                     ),
+                    const SizedBox(height: AppSpacing.md),
                     Row(
-                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        OutlinedButton.icon(
-                          onPressed: () => _copy(group),
-                          icon: const Icon(Icons.copy, size: 16),
-                          label: const Text('Copy'),
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            onPressed: () => _copy(group),
+                            icon: const Icon(Icons.copy, size: 16),
+                            label: const Text('Copy'),
+                          ),
                         ),
                         const SizedBox(width: AppSpacing.sm),
-                        FilledButton.icon(
-                          onPressed: () => _share(group),
-                          icon: const Icon(Icons.share, size: 16),
-                          label: const Text('Share'),
+                        Expanded(
+                          child: FilledButton.icon(
+                            onPressed: () => _share(group),
+                            icon: const Icon(Icons.share, size: 16),
+                            label: const Text('Share'),
+                          ),
                         ),
                       ],
                     ),
