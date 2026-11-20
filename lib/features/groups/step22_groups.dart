@@ -1,8 +1,9 @@
 import 'package:flutter/widgets.dart';
 
 import '../../ui/app_widgets.dart';
+import 'my_groups_screen.dart';
 
-Widget groupsTab() => const PendingStep22Screen('My Groups');
+Widget groupsTab() => const MyGroupsScreen();
 
 Widget groupDetailScreen(String groupId) =>
     const PendingStep22Screen('Group Detail');
