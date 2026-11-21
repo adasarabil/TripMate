@@ -1,13 +1,14 @@
 import 'package:flutter/widgets.dart';
 
-import '../../ui/app_widgets.dart';
+import 'add_expense_screen.dart';
+import 'expenses_tab.dart';
+import 'profile_screen.dart';
+import 'settle_up_screen.dart';
 
-Widget expensesTripTab(String tripId) =>
-    const PendingStep22Screen('Expenses', embedded: true);
+Widget expensesTripTab(String tripId) => ExpensesTab(tripId: tripId);
 
-Widget addExpenseScreen(String tripId) =>
-    const PendingStep22Screen('Add Expense');
+Widget addExpenseScreen(String tripId) => AddExpenseScreen(tripId: tripId);
 
-Widget settleUpScreen(String tripId) => const PendingStep22Screen('Settle Up');
+Widget settleUpScreen(String tripId) => SettleUpScreen(tripId: tripId);
 
-Widget profileTab() => const PendingStep22Screen('Profile');
+Widget profileTab() => const ProfileScreen();
