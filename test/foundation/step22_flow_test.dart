@@ -134,7 +134,7 @@ void main() {
   ) async {
     await _openTrips(tester);
     await _tap(tester, find.text('Groups'));
-    expect(find.text('My Groups is in development.'), findsOneWidget);
+    expect(find.text('Join with invite code'), findsOneWidget);
     await _tap(tester, find.text('Trips'));
     await _tap(tester, find.byTooltip('Open Profile'));
     expect(find.text('Log Out'), findsOneWidget);

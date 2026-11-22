@@ -1,12 +1,14 @@
 import 'package:flutter/widgets.dart';
 
-import '../../ui/app_widgets.dart';
+import 'group_detail_screen.dart';
+import 'join_group_screen.dart';
+import 'my_groups_screen.dart';
+import 'settings_screen.dart';
 
-Widget groupsTab() => const PendingStep22Screen('My Groups');
+Widget groupsTab() => const MyGroupsScreen();
 
-Widget groupDetailScreen(String groupId) =>
-    const PendingStep22Screen('Group Detail');
+Widget groupDetailScreen(String groupId) => GroupDetailScreen(groupId: groupId);
 
-Widget joinGroupScreen() => const PendingStep22Screen('Join Group');
+Widget joinGroupScreen() => const JoinGroupScreen();
 
-Widget settingsScreen() => const PendingStep22Screen('Settings');
+Widget settingsScreen() => const SettingsScreen();
