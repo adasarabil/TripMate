@@ -19,6 +19,7 @@ class CreateTripScreen extends StatefulWidget {
 class _CreateTripScreenState extends State<CreateTripScreen> {
   final _formKey = GlobalKey<FormState>();
   final _title = TextEditingController();
+  final _endField = GlobalKey<FormFieldState<String>>();
   var _autovalidate = AutovalidateMode.disabled;
   String? _groupId;
   DateTime? _start;
@@ -38,6 +39,14 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
   void dispose() {
     _title.dispose();
     super.dispose();
+  }
+
+  /// The end date rule depends on the start date. Once errors are showing,
+  /// re-check the end date when the start moves so a stale "must be after"
+  /// message clears (or a new one appears) without touching the end field.
+  void _recheckEnd() {
+    if (_autovalidate == AutovalidateMode.disabled) return;
+    _endField.currentState?.validate();
   }
 
   Future<void> _pickCover() async {
@@ -206,7 +215,10 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                       firstDate: firstDate,
                       lastDate: lastDate,
                       initialPickerDate: today,
-                      onChanged: (date) => setState(() => _start = date),
+                      onChanged: (date) {
+                        setState(() => _start = date);
+                        _recheckEnd();
+                      },
                       validator: (value) =>
                           value == null ? 'Select a start date' : null,
                     ),
@@ -215,6 +227,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                   Expanded(
                     child: TripDateField(
                       key: const Key('trip-end'),
+                      fieldKey: _endField,
                       label: 'End date',
                       value: _end,
                       firstDate: firstDate,

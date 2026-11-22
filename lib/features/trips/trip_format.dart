@@ -120,8 +120,12 @@ class TripDateField extends StatefulWidget {
     required this.onChanged,
     required this.validator,
     this.initialPickerDate,
+    this.fieldKey,
   });
 
+  /// Lets a form re-run this field's validator when a date it depends on
+  /// changes, e.g. the end date after the start date moves.
+  final GlobalKey<FormFieldState<String>>? fieldKey;
   final String label;
   final DateTime? value;
   final DateTime firstDate;
@@ -178,6 +182,7 @@ class _TripDateFieldState extends State<TripDateField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: widget.fieldKey,
       controller: _controller,
       readOnly: true,
       onTap: _pick,

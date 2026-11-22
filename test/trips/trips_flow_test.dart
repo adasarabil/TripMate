@@ -90,6 +90,25 @@ void main() {
     },
   );
 
+  testWidgets('New Trip re-checks the end date when the start date moves', (
+    tester,
+  ) async {
+    await _openTrips(tester);
+    await _tap(tester, find.byTooltip('Create trip'));
+    await _pickDay(tester, find.byKey(const Key('trip-start')), 20);
+    await _pickDay(tester, find.byKey(const Key('trip-end')), 18);
+    await _tap(tester, _filled('Create Trip'));
+    expect(find.text('End date must be after start date'), findsOneWidget);
+
+    // Fixing the start alone clears the end date error.
+    await _pickDay(tester, find.byKey(const Key('trip-start')), 15);
+    expect(find.text('End date must be after start date'), findsNothing);
+
+    // Moving the start past the end shows it again.
+    await _pickDay(tester, find.byKey(const Key('trip-start')), 22);
+    expect(find.text('End date must be after start date'), findsOneWidget);
+  });
+
   testWidgets('Route total, leg filter, and adding/removing a cheaper option', (
     tester,
   ) async {
