@@ -224,6 +224,25 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('City stop re-checks departure when the arrival moves', (
+    tester,
+  ) async {
+    await _openTrips(tester);
+    await _tap(tester, find.text('Interrail Summer'));
+    await _tap(tester, find.widgetWithText(OutlinedButton, 'Add city'));
+    await _pickDay(tester, find.byKey(const Key('stop-arrival')), 18);
+    await _pickDay(tester, find.byKey(const Key('stop-departure')), 17);
+    await _tap(tester, _filled('Save Stop'));
+    expect(find.text('Departure can’t be before arrival'), findsOneWidget);
+
+    // Moving the arrival earlier fixes the pair without touching departure.
+    await _pickDay(tester, find.byKey(const Key('stop-arrival')), 16);
+    expect(find.text('Departure can’t be before arrival'), findsNothing);
+
+    await _pickDay(tester, find.byKey(const Key('stop-arrival')), 19);
+    expect(find.text('Departure can’t be before arrival'), findsOneWidget);
+  });
+
   testWidgets('Remove city on the route asks first', (tester) async {
     await _openTrips(tester);
     await _tap(tester, find.text('Interrail Summer'));

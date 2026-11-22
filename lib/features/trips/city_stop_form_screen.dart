@@ -47,6 +47,7 @@ class _CityStopFormState extends State<_CityStopForm> {
   );
   late DateTime? _arrival = widget.stop?.arrival;
   late DateTime? _departure = widget.stop?.departure;
+  final _departureField = GlobalKey<FormFieldState<String>>();
   var _autovalidate = AutovalidateMode.disabled;
   var _saving = false;
 
@@ -58,6 +59,14 @@ class _CityStopFormState extends State<_CityStopForm> {
     _hotelName.dispose();
     _hotelAddress.dispose();
     super.dispose();
+  }
+
+  /// Departure is checked against arrival, so re-check it when arrival moves
+  /// once errors are showing; otherwise a fixed arrival leaves a stale
+  /// "can't be before arrival" message on the departure field.
+  void _recheckDeparture() {
+    if (_autovalidate == AutovalidateMode.disabled) return;
+    _departureField.currentState?.validate();
   }
 
   String? _withinTrip(DateTime value, String label) {
@@ -154,7 +163,10 @@ class _CityStopFormState extends State<_CityStopForm> {
                       value: _arrival,
                       firstDate: trip.start,
                       lastDate: trip.end,
-                      onChanged: (date) => setState(() => _arrival = date),
+                      onChanged: (date) {
+                        setState(() => _arrival = date);
+                        _recheckDeparture();
+                      },
                       validator: (value) => value == null
                           ? 'Select an arrival date'
                           : _withinTrip(value, 'Arrival'),
@@ -164,6 +176,7 @@ class _CityStopFormState extends State<_CityStopForm> {
                   Expanded(
                     child: TripDateField(
                       key: const Key('stop-departure'),
+                      fieldKey: _departureField,
                       label: 'Departure',
                       value: _departure,
                       firstDate: trip.start,
