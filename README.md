@@ -55,6 +55,8 @@ flutter run -d <device-id>
 
 On Welcome, select **Log In**. Use `ada@example.com` and `tripmate123` to open My Trips as Ada. Both auth screens validate locally and start the same demo session. Trips and settings use in-memory demo data that resets when the app restarts. The Flutter UI demo runs offline once built.
 
+To try joining a group, open **Groups**, select **Join with invite code**, enter `TRP-7M2Q`, and tap **Join Group**. The app opens **Cappadocia Crew** and adds it to **My Groups**.
+
 Run `flutter analyze` and `flutter test` from the repo root to verify the app.
 
 ### Step 3 Firebase and Google Places
