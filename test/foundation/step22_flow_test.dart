@@ -137,11 +137,11 @@ void main() {
     expect(find.text('My Groups is in development.'), findsOneWidget);
     await _tap(tester, find.text('Trips'));
     await _tap(tester, find.byTooltip('Open Profile'));
-    expect(find.text('Profile is in development.'), findsOneWidget);
+    expect(find.text('Log Out'), findsOneWidget);
     expect(find.byType(BottomNavigationBar), findsOneWidget);
     expect(_navigator(tester).canPop(), isFalse);
 
-    final context = tester.element(find.byType(PendingStep22Screen));
+    final context = tester.element(find.byType(BottomNavigationBar));
     final session = context.read<DemoSession>();
     expect(session.currentTab, AppMainTab.profile);
     session.setThemeMode(ThemeMode.dark);
@@ -185,9 +185,9 @@ void main() {
       _navigator(tester)
           .pushNamed<void>(AppRoute.addExpense, arguments: 'interrail-summer');
       await tester.pumpAndSettle();
-      expect(find.text('Add Expense is in development.'), findsOneWidget);
+      expect(find.text('Add Expense'), findsOneWidget);
       await _tap(tester, find.byType(BackButton));
-      expect(find.text('Expenses is in development.'), findsOneWidget);
+      expect(find.text('Total spent'), findsOneWidget);
 
       await _tap(tester, find.byTooltip('Trip options'));
       await _tap(tester, find.text('Remove trip'));
