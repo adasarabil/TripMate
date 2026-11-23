@@ -57,6 +57,8 @@ On Welcome, select **Log In**. Use `ada@example.com` and `tripmate123` to open M
 
 To try joining a group, open **Groups**, select **Join with invite code**, enter `TRP-7M2Q`, and tap **Join Group**. The app opens **Cappadocia Crew** and adds it to **My Groups**.
 
+To try shared expenses, open **Interrail Summer**, then **Expenses**. Tap **+**, enter an amount and choose **Equal** or **Custom**. Amounts are stored in cents, so an equal split never loses money: when €100.00 is split three ways, one member pays €33.34 and the screen says who pays the extra cent. In **Custom**, the shares must add up to the full amount before the expense can be saved. **Settle up** lists a short set of transfers that clear every balance; **Paid** marks a transfer as settled without changing the balances shown below it.
+
 Run `flutter analyze` and `flutter test` from the repo root to verify the app.
 
 ### Step 3 Firebase and Google Places
