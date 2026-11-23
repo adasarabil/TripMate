@@ -118,6 +118,27 @@ class _AddExpenseFormState extends State<_AddExpenseForm> {
           if (_included.contains(id)) id,
       ]);
 
+  /// "€0.01 doesn't split evenly: Ada pays one extra cent." — shown in
+  /// Equal mode so it is clear who absorbs the rounding.
+  String? get _leftoverNote {
+    final amount = _amountMinor;
+    if (_split != SplitType.equal || amount == null || amount <= 0) {
+      return null;
+    }
+    final payers = ExpenseStore.leftoverCentPayers(amount, [
+      for (final id in widget.memberIds)
+        if (_included.contains(id)) id,
+    ]);
+    if (payers.isEmpty) return null;
+    final names = [for (final id in payers) memberName(id)];
+    final who = names.length == 1
+        ? names.single
+        : '${names.sublist(0, names.length - 1).join(', ')} and ${names.last}';
+    final verb = names.length == 1 ? 'pays' : 'each pay';
+    return '${ExpenseFormat.money(payers.length, _currency)} doesn\'t split '
+        'evenly: $who $verb one extra cent.';
+  }
+
   /// The error shown under the member list, if any.
   String? get _splitError {
     if (_autovalidate == AutovalidateMode.disabled) return null;
@@ -265,6 +286,17 @@ class _AddExpenseFormState extends State<_AddExpenseForm> {
                 )
               else
                 for (final id in widget.memberIds) _memberRow(context, id),
+              if (_leftoverNote case final note?)
+                Padding(
+                  padding: const EdgeInsets.only(top: AppSpacing.xs),
+                  child: Text(
+                    note,
+                    key: const Key('expense-leftover-note'),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ),
               if (splitError != null)
                 Padding(
                   padding: const EdgeInsets.only(top: AppSpacing.xs),

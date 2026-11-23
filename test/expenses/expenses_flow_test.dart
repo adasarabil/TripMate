@@ -61,6 +61,7 @@ void main() {
     expect(find.text('Dinner in Rome'), findsOneWidget);
     expect(find.text('Paid by Naz · split equally (5)'), findsOneWidget);
     expect(find.text('Paid by Ata · custom split'), findsOneWidget);
+    expect(find.text('€120.00'), findsOneWidget);
   });
 
   testWidgets('custom split must add up before the expense is saved', (
