@@ -109,4 +109,19 @@ void main() {
     );
     expect(store.balanceOf(_trip, 'someone-who-left'), 1000);
   });
+
+  test('leftover cents go to the first members, one each', () {
+    expect(ExpenseStore.leftoverCentPayers(10000, ['ada', 'naz', 'ata']), [
+      'ada',
+    ]);
+    expect(
+      ExpenseStore.leftoverCentPayers(10002, ['ada', 'naz', 'ata', 'emre']),
+      ['ada', 'naz'],
+    );
+    expect(
+      ExpenseStore.leftoverCentPayers(9000, ['ada', 'naz', 'ata']),
+      isEmpty,
+    );
+    expect(ExpenseStore.leftoverCentPayers(500, const []), isEmpty);
+  });
 }

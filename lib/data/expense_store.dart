@@ -203,6 +203,18 @@ class ExpenseStore extends ChangeNotifier {
     };
   }
 
+  /// Members who pay one extra cent when [amountMinor] does not split
+  /// evenly between [memberIds], in the same order [equalShares] uses.
+  /// 100 / 3 → ['ada'] (the 1 leftover cent goes to the first member).
+  static List<String> leftoverCentPayers(
+    int amountMinor,
+    List<String> memberIds,
+  ) {
+    if (memberIds.isEmpty || amountMinor <= 0) return const [];
+    final rest = amountMinor % memberIds.length;
+    return List.unmodifiable(memberIds.take(rest));
+  }
+
   static final _seed = <Expense>[
     Expense(
       id: 'expense-dinner-rome',
