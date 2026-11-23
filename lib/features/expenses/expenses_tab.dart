@@ -239,7 +239,7 @@ class _ExpenseCard extends StatelessWidget {
                 fit: BoxFit.scaleDown,
                 alignment: Alignment.centerRight,
                 child: Text(
-                  TripFormat.money(expense.amountMinor, currencyCode),
+                  ExpenseFormat.money(expense.amountMinor, currencyCode),
                   style: theme.textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
@@ -249,7 +249,7 @@ class _ExpenseCard extends StatelessWidget {
             IconButton(
               tooltip: 'Remove ${expense.description}',
               onPressed: onRemove,
-              icon: const Icon(Icons.delete_outline, size: 20),
+              icon: const Icon(Icons.close, size: 16),
             ),
           ],
         ),
